@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Security.Principal;
 using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
@@ -12,12 +13,14 @@ public class PlayerCharacter : MonoBehaviour {
 	protected GameObject gameController;
 	protected Rigidbody2D rbody;
 	public SpriteRenderer spriteRenderer;
+	public Vector2 startingPosition;
 
 	[Header("Health")]
 	public HealthUI hui;
 	public Slider hekagauge;
 	public Damageable damageable;
 	public ParticleSystem bloodSplash;
+	public float respawnDelay = 3f;
 
 	[Header("Hekah")]
 	[SerializeField] private float maxHeka = 100;
@@ -131,6 +134,58 @@ public class PlayerCharacter : MonoBehaviour {
 		spriteRenderer.enabled = true;
 	}
 
+	public void OnDie()
+	{
+		StartCoroutine(DieRespawnCoroutine(true));
+	}
+
+	IEnumerator DieRespawnCoroutine(bool resetHealth)
+	{
+		PlayerInput.Instance.ReleaseControl(true);
+		slowdownLength *= 4;
+		slowdownFactor *= 4;
+		Slowdown();
+		yield return StartCoroutine(ScreenFader.FadeSceneOut(ScreenFader.FadeType.GameOver));
+		GeometryExtensions.SetPosition2D(transform, startingPosition.x, startingPosition.y);
+		yield return new WaitForSeconds(respawnDelay);
+		Respawn(resetHealth);
+		slowdownLength /= 4;
+		slowdownFactor /= 4;
+		yield return new WaitForEndOfFrame();
+		yield return StartCoroutine(ScreenFader.FadeSceneIn());
+		PlayerInput.Instance.GainControl();
+	}
+
+	public void Respawn(bool resetHealth)
+	{
+		if (resetHealth)
+		{
+			resetCharacter();
+		}
+		//we reset the hurt trigger, as we don't want the player to go back to hurt animation once respawned
+		//m_Animator.ResetTrigger(m_HashHurtPara);
+		if (m_FlickerCoroutine != null)
+		{//we stop flcikering for the same reason
+			StopFlickering();
+		}
+
+		//m_Animator.SetTrigger(m_HashRespawnPara);
+
+		//GameObjectTeleporter.Teleport(gameObject, m_StartingPosition);
+	}
+
+	public void resetCharacter()
+	{
+		damageable.SetHealth(damageable.maxHealth);
+		hui.ChangeHitPointUI(damageable);
+		currentHeka = maxHeka;
+		if (cState.mural)
+		{
+			gameObject.layer = cState.mural ? realLayer : LayerMask.NameToLayer(muralLayerName);
+			cState.mural = !cState.mural;
+			m_Animator.SetBool("mural", cState.mural);
+		}
+	}
 	public void switchWorlds()
 	{
 		if (cState.mural || currentHeka > 0)

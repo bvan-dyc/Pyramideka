@@ -37,6 +37,8 @@ public class SeekerAI : MonoBehaviour
 	private bool searchingForPlayer = false;
 	
 	void Start () {
+		if (transform.localScale.x < 0)
+			facingRight = !facingRight;
 		seeker = GetComponent<Seeker>();
 		rb = GetComponent<Rigidbody2D>();
 		target = GameObject.FindGameObjectWithTag("Player").transform;

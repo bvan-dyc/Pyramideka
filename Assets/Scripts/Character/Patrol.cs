@@ -8,11 +8,11 @@ public class Patrol : MonoBehaviour
 	public bool canFall = false;
 	[SerializeField] private Transform groundCheck = null;
 	[SerializeField] private Transform wallCheck = null;
+	[SerializeField] private bool isFacingRight = false;
 	private Rigidbody2D rbody;
 	private Vector2 velocity;
 	private const float CHECK_RADIUS = 0.2f;
 	[SerializeField] private LayerMask groundLayer = default;
-
 	// Update is called once per frame
 	void Awake()
 	{
@@ -21,7 +21,7 @@ public class Patrol : MonoBehaviour
 
 	private void Start()
 	{
-		velocity = new Vector2(Mathf.Sign(-transform.localScale.x) * speed, 0f);
+		velocity = new Vector2(Mathf.Sign(-transform.localScale.x * (isFacingRight ? -1 : 1)) * speed, 0f);
 	}
 
 	private void FixedUpdate()

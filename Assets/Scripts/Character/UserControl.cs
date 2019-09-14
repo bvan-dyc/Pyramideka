@@ -35,11 +35,11 @@ public class UserControl : MonoBehaviour {
 				if (PlayerInput.Instance.Dash.Down)
 					dashRequest = true;
 			}
-			if (PlayerInput.Instance.RangedAttack.Down || Input.GetKeyDown(KeyCode.C))
+			if (PlayerInput.Instance.RangedAttack.Down)
 			{
 				character.CharacterFluff();
 			}
-			if (PlayerInput.Instance.Interact.Down || Input.GetKeyDown(KeyCode.E))
+			if (PlayerInput.Instance.Interact.Down)
 			{
 				character.switchWorld();
 			}
