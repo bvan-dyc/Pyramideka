@@ -274,8 +274,8 @@ MonoBehaviour:
   bulletSpawnPoint: {fileID: 5643451388691245502}
   bulletPool: {fileID: 8725078385641280497}
   bulletSpeed: 5
-  nextShotTime: 1
-  nextShotSpawnGap: 1
+  nextShotTime: 3
+  nextShotSpawnGap: 3
   continuous: 0
   trigger: 0
   lockDirection: 0

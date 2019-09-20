@@ -106,4 +106,5 @@ public class PlayerCharacterStates
 	public bool slidingRight;
 	public bool touchingNonSlider;
 	public bool wasgrounded;
+	public bool weaponDetached;
 }

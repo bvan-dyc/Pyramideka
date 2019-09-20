@@ -28,6 +28,10 @@ public class CharacterController2D : MonoBehaviour
 
 	[Header("Attacks")]
 	[SerializeField] private Damager melee = null;
+	[SerializeField] private GameObject weaponSprite = null;
+	[SerializeField] private Transform caster = null;
+	[SerializeField] private float spearSpeed = 5f;
+	[SerializeField] private GameObject spear = null;
 	[SerializeField] private float meleeCooldown = 0.5f;
 
 	[Header("Audio")]
@@ -210,7 +214,7 @@ public class CharacterController2D : MonoBehaviour
 
 	public void MeleeAttack()
 	{
-		if (!cState.mural && meleeTimer >= meleeCooldown)
+		if (!cState.weaponDetached && !cState.mural && meleeTimer >= meleeCooldown)
 		{
 			melee.EnableDamage();
 			animator.SetTrigger("meleeAttack");
@@ -219,6 +223,35 @@ public class CharacterController2D : MonoBehaviour
 		}
 	}
 
+	public void recoverWeapon()
+	{
+		if (cState.weaponDetached)
+		{
+			Weapon weapon = GameObject.FindGameObjectWithTag("Weapon").GetComponent<Weapon>();
+			if (weapon)
+				weapon.Retrieve();
+			cState.weaponDetached = false;
+			weaponSprite.SetActive(true);
+			animator.SetTrigger("recoverWeapon");
+		}
+	}
+
+	public void throwWeapon()
+	{
+		if (!cState.weaponDetached)
+		{
+			Vector3 shootDirection = transform.forward;
+			shootDirection.z = transform.position.z;
+			shootDirection = shootDirection - caster.position;
+			GameObject bulletInstance = Instantiate(spear, caster.position, Quaternion.identity);
+			shootDirection = -shootDirection.normalized;
+			bulletInstance.GetComponent<Rigidbody2D>().velocity = new Vector2(shootDirection.x * spearSpeed, shootDirection.y * spearSpeed);
+			cState.weaponDetached = true;
+			animator.SetTrigger("throwWeapon");
+			weaponSprite.SetActive(false);
+			meleeAudioSource.PlayOneShot(meleeAudio);
+		}
+	}
 	public void CharacterFluff()
 	{
 		if (!cState.mural)

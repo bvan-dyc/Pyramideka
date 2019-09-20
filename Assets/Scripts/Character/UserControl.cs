@@ -39,9 +39,14 @@ public class UserControl : MonoBehaviour {
 			{
 				character.CharacterFluff();
 			}
-			if (PlayerInput.Instance.Interact.Down)
+			if (PlayerInput.Instance.Interact.Down && Input.GetAxis("Vertical") < 0)
 			{
-				character.switchWorld();
+				character.recoverWeapon();
+			}
+			else if (PlayerInput.Instance.Interact.Down)
+			{
+				//character.switchWorld();
+				character.throwWeapon();
 			}
 		}
 	}
