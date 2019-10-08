@@ -129,8 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 2
-  invulnerableAfterDamage: 0
-  invulnerabilityDuration: 0.1
+  invulnerableAfterDamage: 1
+  invulnerabilityDuration: 1
   disableOnDeath: 1
   OnHealthSet:
     m_PersistentCalls:

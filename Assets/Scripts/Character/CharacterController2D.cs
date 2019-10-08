@@ -43,6 +43,8 @@ public class CharacterController2D : MonoBehaviour
 	[SerializeField] private AudioClip jumpAudio = null;
 	[SerializeField] private AudioClip landAudio = null;
 	[SerializeField] private AudioClip meleeAudio = null;
+	[SerializeField] private AudioClip throwAudio = null;
+	[SerializeField] private AudioClip weaponRecoverAudio = null;
 	[SerializeField] private AudioClip dashAudio = null;
 
 	private Rigidbody2D	rbody;
@@ -233,6 +235,7 @@ public class CharacterController2D : MonoBehaviour
 			cState.weaponDetached = false;
 			weaponSprite.SetActive(true);
 			animator.SetTrigger("recoverWeapon");
+			meleeAudioSource.PlayOneShot(weaponRecoverAudio);
 		}
 	}
 
@@ -244,12 +247,13 @@ public class CharacterController2D : MonoBehaviour
 			shootDirection.z = transform.position.z;
 			shootDirection = shootDirection - caster.position;
 			GameObject bulletInstance = Instantiate(spear, caster.position, Quaternion.identity);
-			shootDirection = -shootDirection.normalized;
+			shootDirection = -transform.localScale.x * shootDirection.normalized;
 			bulletInstance.GetComponent<Rigidbody2D>().velocity = new Vector2(shootDirection.x * spearSpeed, shootDirection.y * spearSpeed);
+			GeometryExtensions.SetScaleX(bulletInstance.transform, transform.localScale.x);
 			cState.weaponDetached = true;
 			animator.SetTrigger("throwWeapon");
 			weaponSprite.SetActive(false);
-			meleeAudioSource.PlayOneShot(meleeAudio);
+			meleeAudioSource.PlayOneShot(throwAudio);
 		}
 	}
 	public void CharacterFluff()

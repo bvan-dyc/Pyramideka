@@ -284,8 +284,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 1
-  offset: {x: 0.60071725, y: 0.006041825}
-  size: {x: 1.344237, y: 0.3545426}
+  offset: {x: 0.70069784, y: 0.006041825}
+  size: {x: 1.1371528, y: 0.3545426}
   offsetBasedOnSpriteFacing: 1
   spriteRenderer: {fileID: 0}
   forceRespawn: 0

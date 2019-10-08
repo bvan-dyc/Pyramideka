@@ -693,7 +693,7 @@ MonoBehaviour:
         - 
         - 
         - 
-        - 
+        - Look At 2d
         - 
         actionEnabled: 0001010101
         actionIsOpen: 0101010101
@@ -721,8 +721,8 @@ MonoBehaviour:
             value: {fileID: 0}
         - ownerOption: 1
           gameObject:
-            useVariable: 0
-            name: 
+            useVariable: 1
+            name: target
             tooltip: 
             showInInspector: 0
             networkSync: 0

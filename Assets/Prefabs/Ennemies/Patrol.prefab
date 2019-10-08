@@ -199,7 +199,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8e63a8e3f30b85f42a41f8e406c59e7d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 1
+  m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 15.64, y: 10.12}
@@ -328,8 +328,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxHealth: 1
-  invulnerableAfterDamage: 0
-  invulnerabilityDuration: 0.1
+  invulnerableAfterDamage: 1
+  invulnerabilityDuration: 1
   disableOnDeath: 1
   OnHealthSet:
     m_PersistentCalls:
@@ -375,6 +375,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aae896da1ae844b46afcf035e551993a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  facingRight: 1
   damageable: {fileID: 2391068106558945086}
   deadBodyPrefab: {fileID: 8720621225036891371, guid: 5998d17d76feaba4ba63971e35181d14,
     type: 3}
@@ -384,6 +385,7 @@ MonoBehaviour:
   knockback: 0
   knockbackDuration: 0
   knockbackSpeed: 20
+  angered: 0
   audioSource: {fileID: 4210092640785763386}
   hurtAudio: {fileID: 8300000, guid: 8bbd2698914bef644b2a53757d65ad90, type: 3}
 --- !u!114 &2390371530269201440
@@ -437,7 +439,7 @@ MonoBehaviour:
   canFall: 0
   groundCheck: {fileID: 8601763500542946627}
   wallCheck: {fileID: 8601763498933578856}
-  isFacingRight: 0
+  isFacingRight: 1
   groundLayer:
     serializedVersion: 2
     m_Bits: 1024
@@ -5316,7 +5318,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8601763498933578857}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.7, y: -0, z: 0}
+  m_LocalPosition: {x: 0.7, y: -0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2356736065915717602}
@@ -5346,7 +5348,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8601763500542946628}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.7, y: -0.497, z: 0}
+  m_LocalPosition: {x: 0.7, y: -0.497, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2356736065915717602}

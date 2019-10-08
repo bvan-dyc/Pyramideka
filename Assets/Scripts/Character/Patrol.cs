@@ -21,7 +21,7 @@ public class Patrol : MonoBehaviour
 
 	private void Start()
 	{
-		velocity = new Vector2(Mathf.Sign(-transform.localScale.x * (isFacingRight ? -1 : 1)) * speed, 0f);
+		velocity = new Vector2(transform.localScale.x * speed, 0f);
 	}
 
 	private void FixedUpdate()
@@ -55,7 +55,6 @@ public class Patrol : MonoBehaviour
 
 	private void Turn()
 	{
-		transform.SetScaleX(-1 * transform.localScale.x);
 		velocity.x = -1 * velocity.x;
 	}
 }

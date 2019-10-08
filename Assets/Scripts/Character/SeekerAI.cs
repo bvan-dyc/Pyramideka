@@ -19,7 +19,6 @@ public class SeekerAI : MonoBehaviour
 	//The calculated path
 	public Path path;
 	public bool grounded = false;
-	public bool facingRight = true;
 
 	//The AI's speed per second
 	public float speed = 300f;
@@ -37,8 +36,6 @@ public class SeekerAI : MonoBehaviour
 	private bool searchingForPlayer = false;
 	
 	void Start () {
-		if (transform.localScale.x < 0)
-			facingRight = !facingRight;
 		seeker = GetComponent<Seeker>();
 		rb = GetComponent<Rigidbody2D>();
 		target = GameObject.FindGameObjectWithTag("Player").transform;
@@ -134,24 +131,10 @@ public class SeekerAI : MonoBehaviour
 		
 		//Move the AI
 		rb.AddForce (dir, fMode);
-		float xdist = transform.position.x - target.position.x;
-		if (xdist < 0 && !facingRight || xdist > 0 && facingRight)
-		{
-			Flip();
-		}
-
 		float dist = Vector3.Distance (transform.position, path.vectorPath[currentWaypoint]);
 		if (dist < nextWaypointDistance) {
 			currentWaypoint++;
 			return;
 		}
-	}
-
-	private void Flip()
-	{
-		facingRight = !facingRight;
-		Vector3 flipScale = transform.localScale;
-		flipScale.x *= -1;
-		transform.localScale = flipScale;
 	}
 }

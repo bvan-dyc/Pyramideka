@@ -5,6 +5,7 @@ using DG.Tweening;
 
 public class Enemy : MonoBehaviour
 {
+	[SerializeField] private bool facingRight = true;
 	[Header("Health")]
 	public Damageable		damageable;
 	[SerializeField] private GameObject deadBodyPrefab = null;
@@ -20,13 +21,14 @@ public class Enemy : MonoBehaviour
 	[SerializeField] private bool knockback = true;
 	[SerializeField] private float knockbackDuration = 0.2f;
 	[SerializeField] private float knockbackSpeed = 20.0f;
+	private bool gettingKnockedBack = false;
+	public bool angered = false;
 
 	[Header("Sound")]
 	[SerializeField] private AudioSource audioSource = null;
 	[SerializeField] private AudioClip hurtAudio = null;
 
 	private float knockbackTimer = 0.0f;
-	private bool gettingKnockedBack = false;
 
 	public void Awake()
 	{
@@ -38,8 +40,16 @@ public class Enemy : MonoBehaviour
 	{
 		if (knockback && gettingKnockedBack)
 			Knockback();
+		else
+			checkFacing();
 	}
 
+	private void checkFacing()
+	{
+		if ((rbody.velocity.x < 0 && transform.localScale.x > 0) ||
+			(rbody.velocity.x > 0 && transform.localScale.x < 0))
+			transform.SetScaleX(-transform.localScale.x);
+	}
 	public Vector2 GetHurtDirection()
 	{
 		Vector2 damageDirection = damageable.GetDamageDirection();
@@ -55,6 +65,7 @@ public class Enemy : MonoBehaviour
 	public void OnHurt(Damager damager, Damageable damageable)
 	{
 		gettingKnockedBack = true;
+		angered = true;
 		audioSource.PlayOneShot(hurtAudio);
 		if (enableBloodSplash && bloodSplashAnimation)
 			bloodSplashAnimation.Play();
