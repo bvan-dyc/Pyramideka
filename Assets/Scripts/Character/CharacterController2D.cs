@@ -203,7 +203,7 @@ public class CharacterController2D : MonoBehaviour
 	public void Move(float movement, bool jump)
 	{
 		cState.jumping = jump;
-		if (cState.jumping || airControl)
+		if (!cState.jumping || airControl)
 		{
 			float currentSpeed = cState.mural ? muralSpeed : speed;
 			rbody.velocity = new Vector2(movement * currentSpeed, rbody.velocity.y);
